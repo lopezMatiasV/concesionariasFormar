@@ -107,7 +107,7 @@ module.exports = {
             modelo: modelo.trim(),
             anio: anio,
             color: color,
-            sucursal:sucursal,
+            sucursal: +sucursal,
             imagen: req.file ? req.file.filename : "default-image.png" //Si existe req.file (si subieron un archivo), guarda el nombre de ese archivo en el JSON, y si no guarda el "default-image.png".
         }
         

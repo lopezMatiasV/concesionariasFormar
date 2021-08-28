@@ -1,4 +1,4 @@
-let { getAutos } = require('../data/dataBase')
+let { getAutos, getSucursales } = require('../data/dataBase')
 
 let autosController = {
     listar: (req, res) => {
@@ -10,8 +10,10 @@ let autosController = {
         let auto = getAutos.find(auto => {
             return auto.id === +req.params.id 
         })
+        let sucursal = getSucursales.find(sucursal => sucursal.id == auto.sucursal)
         res.render('autoDetail', {
-            auto
+            auto,
+            sucursal
         })   
     }
 }
