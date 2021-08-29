@@ -32,7 +32,9 @@
                 <td><%= auto.anio%> </td>
                 <td><a href="/autos/detalle/<%= auto.id%> "> <ion-icon name="eye-outline"></ion-icon></a></td>
                 <td><a href="/admin/editarAuto/<%= auto.id%> "> <ion-icon name="pencil-outline"></ion-icon></a></td>
-                <td><a href="/admin/eliminarAuto/<%= auto.id%>"><ion-icon name="trash-outline"></ion-icon></a></td>
+                <form action="/admin/eliminarAuto/<%= auto.id%>?_method=DELETE" method="POST">
+                  <td><button type="submit" style="border: none; background: none;"><ion-icon name="trash-outline"></ion-icon></td>
+                </form>
               </tr>
               <% }); %>
             </tbody>

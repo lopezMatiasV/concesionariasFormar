@@ -1,9 +1,12 @@
+//requerimos la base de datos y los metodos para sobreescribir los json
 let { getSucursales, getAutos, writeJson, writeJsonAutos} = require('../data/dataBase');
 
-
+//creamos el controlador
 module.exports = {
     index : (req, res) => {
-        res.render('admin/adminIndex.ejs')
+        res.render('admin/adminIndex.ejs',{
+            user: 'Administrador'
+        })
     },
     sucursales: (req, res) => {
 
@@ -63,7 +66,7 @@ module.exports = {
                 sucursal.nombre = nombre,
                 sucursal.direccion = direccion,
                 sucursal.telefono = telefono,
-                sucursal.imagen = req.file ? req.file.filename : "default-image.png"
+                sucursal.imagen = req.file ? req.file.filename : sucursal.imagen
             }
         })
 
@@ -116,12 +119,40 @@ module.exports = {
         res.redirect('/admin/autos')
     },
     editFormAuto: (req, res) => {
-
+        let auto = getAutos.find(auto => {
+            return auto.id === +req.params.id
+        })
+        res.render('admin/editAuto', {
+            auto,
+            getSucursales
+        })
     },
     editAuto: (req, res) => {
+        let { marca, modelo, anio, color, sucursal } = req.body
+        getAutos.forEach(auto => {
+            if(auto.id === +req.params.id){
+                auto.id = auto.id,
+                auto.marca = marca,
+                auto.modelo = modelo,
+                auto.anio = anio,
+                auto.color = color,
+                auto.sucursal = +sucursal,
+                auto.imagen = req.file ? req.file.filename : auto.imagen
+            }
+        })
 
+        writeJsonAutos(getAutos);
+
+        res.redirect('/admin/autos')
     },
     borrarAuto: (req, res) => {
-
+        getAutos.forEach(auto => {
+            if(auto.id === +req.params.id){
+                let autoAEliminar = getAutos.indexOf(auto);
+                getAutos.splice(autoAEliminar, 1)
+            }
+        })
+        writeJsonAutos(getAutos);
+        res.redirect('/admin/autos');
     },
 }

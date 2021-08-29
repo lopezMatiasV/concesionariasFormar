@@ -4,23 +4,42 @@
 <body>
     <%- include('../partials/headerAdmin.ejs')  %> 
     <main class="container">
-        <h3 class="text-center">Editar sucursal <%= sucursal.nombre %> </h3>
+        <h3 class="text-center">Editar Auto</h3>
         <div class="container col-md-4">
-            <form class="row g-3" action="/admin/editarSucursal/<%= sucursal.id %>?_method=PUT" method="POST">
+            <form class="row g-3" action="/admin/editarAuto/<%= auto.id %>?_method=PUT" method="POST" enctype="multipart/form-data">
                 <div class="col-12">
-                    <label for="inputName" class="form-label">Nombre</label>
-                    <input type="text" class="form-control" id="inputName" name="nombre" value="<%= sucursal.nombre %>">
+                    <label for="marca" class="form-label">Marca</label>
+                    <input type="text" class="form-control" id="marca" name="marca" value="<%= auto.marca %>">
                 </div>
                 <div class="col-12">
-                    <label for="inputAddress" class="form-label">Dirección</label>
-                    <input type="text" class="form-control" id="inputAddress" name="direccion" value="<%= sucursal.direccion%>">
+                    <label for="modelo" class="form-label">Modelo</label>
+                    <input type="text" class="form-control" id="modelo" name="modelo" value="<%= auto.modelo %>">
                 </div>
                 <div class="col-12">
-                    <label for="inputTel" class="form-label">Teléfono</label>
-                    <input type="tel" class="form-control" id="inputTel" name="telefono" value="<%= sucursal.telefono %>">
+                    <label for="anio" class="form-label">Año</label>
+                    <input type="number" class="form-control" id="anio" name="anio" value="<%= auto.anio %>">
                 </div>
                 <div class="col-12">
-                    <button type="submit" class="btn btn-success">EDITAR</button>
+                    <label for="color" class="form-label">Color</label>
+                    <input type="text" class="form-control" id="color" name="color" value="<%= auto.color %>">
+                </div>
+                <div class="col-12">
+                    <label for="sucursal" class="form-label">Sucursal</label>
+                    <select name="sucursal" id="categoria">
+                        <% getSucursales.forEach( sucursal => { %>
+                            <option value="<%= sucursal.id %> "><%= sucursal.nombre %> </option>
+                        <% }) %> 
+                    </select>
+                </div>
+                <div class="col-12">
+                    <figure class="text-center">
+                        <img src="/images/<%= auto.imagen %>" alt="" width="200px" height="200px">
+                    </figure>
+                    <label for="inputFile" class="form-label">Imagen</label>
+                    <input type="file" class="form-control" name="image" id="inputFile">
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary">EDITAR</button>
                 </div>
             </form>
         </div>
