@@ -12,18 +12,10 @@ module.exports = {
         let autos = getAutos.filter(auto => 
             auto.marca.toLowerCase() == busqueda || auto.modelo.toLowerCase() == busqueda
         );
-        if(autos.length == 0){
-            res.render('search',{
-                autos,
-                busqueda
-            })
-        }else{
-            res.render('search',{
-                autos,
-                busqueda
-            })
-        }
-        
+        res.render('search',{
+            autos,
+            busqueda
+        })        
     }
 }
 
