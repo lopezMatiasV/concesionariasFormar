@@ -1,0 +1,13 @@
+[
+  {
+    "id": 1,
+    "nombre": "Matias",
+    "apellido": "Lopez",
+    "email": "matias@gmail.com",
+    "pass": "$2b$10$6ke9g5mW8qaXae/ngk1p1u0wxAfENgL17gebK5O4Kblm8zshUBWNa",
+    "avatar": "1631149609220_img_.jpg",
+    "rol": "admin",
+    "direccion": "San jose",
+    "telefono": "58624533"
+  }
+]

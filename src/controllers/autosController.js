@@ -4,6 +4,7 @@ let autosController = {
     listar: (req, res) => {
         res.render('autos', {
             autos: getAutos,
+            session:req.session
         })
     },   
     auto : (req, res) => {
@@ -13,7 +14,8 @@ let autosController = {
         let sucursal = getSucursales.find(sucursal => sucursal.id == auto.sucursal)
         res.render('autoDetail', {
             auto,
-            sucursal
+            sucursal,
+            session:req.session
         })   
     }
 }

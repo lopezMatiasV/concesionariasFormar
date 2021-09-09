@@ -3,7 +3,8 @@ let { getSucursales, getAutos } = require('../data/dataBase')
 module.exports = {
     sucursales: (req, res) => {
         res.render('sucursales',{
-            getSucursales
+            getSucursales,
+            session: req.session
         })
     },
     sucursal : (req, res) => {
@@ -19,7 +20,8 @@ module.exports = {
         //renderiso la vista con los datos obtenidos
         res.render('sucursal', {
             sucursal,
-            autos
+            autos,
+            session: req.session
         })
         
     }

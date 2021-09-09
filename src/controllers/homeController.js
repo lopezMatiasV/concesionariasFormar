@@ -5,16 +5,18 @@ module.exports = {
         res.render('home', {
             titulo: "Conocé nuestras sucursales",
             sucursales: getSucursales,
+            session: req.session
         })
     },
     search: (req, res) => {
         let busqueda = req.query.search.toLowerCase()
         let autos = getAutos.filter(auto => 
-            auto.marca.toLowerCase() == busqueda || auto.modelo.toLowerCase() == busqueda
+            auto.marca.toLowerCase() == busqueda || auto.modelo.toLowerCase() == busqueda || auto.anio == busqueda
         );
         res.render('search',{
             autos,
-            busqueda
+            busqueda,
+            session: req.session
         })        
     }
 }
