@@ -36,9 +36,11 @@
                     </select>
                     <small class="text-danger"><%= (locals.errors  && errors.sucursal) ? errors.sucursal.msg : "" %></small>
                 </div>
+                <!-- Image preview -->
+                <div id="imagePreview"></div>
                 <div class="col-12">
                     <label for="inputFile" class="form-label">Imagen</label>
-                    <input type="file" class="form-control" name="image" id="inputFile">
+                    <input type="file" class="form-control" id="inputFile" name="image" onchange="return fileValidation()"/>
                 </div>
                 <div class="col-12">
                     <button type="submit" class="btn btn-primary">AGREGAR</button>
@@ -46,7 +48,7 @@
             </form>
         </div>
     </main>
-   
+   <script src="/js/imagePreview.js"></script>
     <%- include('../partials/scripts.ejs')  %> 
 </body>
 </html>
