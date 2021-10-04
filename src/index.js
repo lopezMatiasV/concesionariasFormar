@@ -4,6 +4,7 @@ let path = require('path');
 let methodOverride = require('method-override')
 let session = require('express-session')
 let cookieParser = require('cookie-parser')
+let cookieCheck = require('./middlewares/cookieCheck')
 
 
 /* Enrutadores */
@@ -25,12 +26,7 @@ app.use(express.static('public'));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(session({secret:"concesionarias"}))
-/* app.use(session({ 
-  secret: "mySecret", 
-  resave: false, 
-  saveUninitialized: true ,
-  cookie: { maxAge: 60000 }
-})); */
+app.use(cookieCheck)
 
 /* Rutas */
 app.use('/', homeRouter);

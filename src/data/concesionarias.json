@@ -33,26 +33,5 @@
     "direccion": "Av. Pres. Juan Domingo Perón 2043, B1663 San Miguel, Provincia de Buenos Aires",
     "telefono": "(011) 4451-5565",
     "imagen": "sucursal.jpg"
-  },
-  {
-    "id": 6,
-    "nombre": "Matias",
-    "direccion": "San jose",
-    "telefono": "123",
-    "imagen": "1632774957335_img_.jpg"
-  },
-  {
-    "id": 7,
-    "nombre": "c8",
-    "direccion": "hola",
-    "telefono": 789,
-    "imagen": "1632774957335_img_.jpg"
-  },
-  {
-    "id": 8,
-    "nombre": "c7",
-    "direccion": "chau",
-    "telefono": 632,
-    "imagen": "1632774957335_img_.jpg"
   }
 ]

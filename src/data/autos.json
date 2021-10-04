@@ -3,7 +3,7 @@
     "id": 1,
     "marca": "volkswagen",
     "modelo": "scirocco",
-    "anio": 2016,
+    "anio": "2016",
     "color": "black",
     "sucursal": 1,
     "imagen": "auto.jpg"
@@ -626,7 +626,16 @@
     "modelo": "sandero",
     "anio": 2020,
     "color": "gray",
-    "imagen": "auto3.jpg",
-    "sucursalId": 5
+    "sucursal": 5,
+    "imagen": "auto3.jpg"
+  },
+  {
+    "id": 71,
+    "marca": "prueba",
+    "modelo": "Matias",
+    "anio": "123",
+    "color": "blue",
+    "sucursal": 5,
+    "imagen": "1632272628480_img_.jpg"
   }
 ]
