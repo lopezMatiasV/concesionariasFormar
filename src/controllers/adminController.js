@@ -1,6 +1,7 @@
 //requerimos la base de datos y los metodos para sobreescribir los json
 const { validationResult } = require('express-validator');
 let { getSucursales, getAutos, writeJson, writeJsonAutos} = require('../data/dataBase');
+let db = require('../database/models')
 
 //creamos el controlador
 module.exports = {
@@ -10,8 +11,14 @@ module.exports = {
         })
     },
     sucursales: (req, res) => {
-
-        res.render('admin/adminSucursales', {
+        db.Sucursal.findAll()
+        .then(sucursales => {
+            res.render('admin/adminSucursales',{
+                sucursales,
+                session: req.session
+            })
+        })
+        /* res.render('admin/adminSucursales', {
             sucursales: getSucursales,
             session: req.session,
             autos: function (idSucursal) {
@@ -19,7 +26,7 @@ module.exports = {
                     return auto.sucursal === idSucursal
                 })
             }
-        })
+        }) */
     }, 
     formAgregarSucursal: (req, res) => {
         res.render('admin/agregarSucursal',{
@@ -28,8 +35,19 @@ module.exports = {
     },
     agregarSucursal: (req, res) => {
         let errors = validationResult(req);
+        
         if(errors.isEmpty()){
-            let lastId = 1;
+            let { nombre, direccion, telefono } = req.body
+            db.Sucursal.create({
+                nombre,
+                direccion,
+                telefono,
+                imagen: req.file ? req.file.filename : "default-image.png"
+            })
+            .then(() => {
+                res.redirect('/admin/sucursales')
+            })
+            /* let lastId = 1;
         
         getSucursales.forEach(sucursal => {
             if(sucursal.id > lastId){
@@ -52,7 +70,7 @@ module.exports = {
 
         writeJson(getSucursales);
         
-        res.redirect(`/admin/sucursales#${nuevaSucursal.id}`)
+        res.redirect(`/admin/sucursales#${nuevaSucursal.id}`) */
         }else{
             res.render('admin/agregarSucursal',{
                 errors: errors.mapped(),
@@ -63,21 +81,41 @@ module.exports = {
                 
     },
     editForm: (req, res) => {
-        let sucursal = getSucursales.find(sucursal => {
+        db.Sucursal.findByPk(req.params.id)
+        .then(sucursal => {
+            res.render('admin/editarSucursal', {
+                sucursal,
+                session: req.session
+            })
+        })
+        /* let sucursal = getSucursales.find(sucursal => {
             return sucursal.id === +req.params.id
         })
 
         res.render('admin/editarSucursal', {
             sucursal,
             session: req.session
-        })
+        }) */
     },
     editarSucursal: (req, res) => {
         let errors = validationResult(req);
         if(errors.isEmpty()){
+            let sucursal = db.Sucursal.findByPk(req.params.id)
             let { nombre, direccion, telefono } = req.body;
-
-        getSucursales.forEach(sucursal => {
+            db.Sucursal.update({
+                nombre,
+                direccion,
+                telefono,
+                imagen: req.file ? req.file.filename : sucursal.imagen
+            },{
+                where: {
+                    id: req.params.id
+                }
+            })
+            .then(() => {
+                res.redirect('/admin/sucursales')
+            })
+        /* getSucursales.forEach(sucursal => {
             if(sucursal.id === +req.params.id){
                 sucursal.id = sucursal.id,
                 sucursal.nombre = nombre,
@@ -89,53 +127,97 @@ module.exports = {
 
         writeJson(getSucursales);
 
-        res.redirect('/admin/sucursales')
+        res.redirect('/admin/sucursales') */
         }else{
-            let sucursal = getSucursales.find(sucursal => sucursal.id === +req.params.id)
+            
+            db.Sucursal.findByPk(req.params.id)
+            .then(sucursal => {
+                res.render('admin/editarSucursal', {
+                    sucursal,
+                    session: req.session,
+                    errors: errors.mapped(),
+                    old: req.body
+                })
+            })
+            /* let sucursal = getSucursales.find(sucursal => sucursal.id === +req.params.id) 
             res.render('admin/editarSucursal', {
                 sucursal,
                 session: req.session,
                 errors: errors.mapped(),
                 old: req.body
-            })
+            })*/
         }
         
     },
     borrarSucursal: (req, res) => {
-        getSucursales.forEach(sucursal => {
+        db.Sucursal.destroy({
+            where:{
+                id : req.params.id
+            }
+        })
+        .then(() => {
+            res.redirect('/admin/sucursales');
+        })
+        /* getSucursales.forEach(sucursal => {
             if(sucursal.id === +req.params.id){
                 let sucursalAEliminar = getSucursales.indexOf(sucursal);
                 getSucursales.splice(sucursalAEliminar, 1)
             }
         })
         writeJson(getSucursales);
-        res.redirect('/admin/sucursales');
+        res.redirect('/admin/sucursales'); */
     },
     autos: (req, res) => {
-        res.render('admin/adminAutos', {
+        db.Auto.findAll()
+        .then(autos => {
+            res.render('admin/adminAutos', {
+                getAutos: autos,
+                session: req.session
+            })
+        })
+        /* res.render('admin/adminAutos', {
             getAutos,
             session: req.session
-        })
+        }) */
     },
     formAgregarAuto: (req, res) => {
-        res.render('admin/agregarAuto',{
+        db.Sucursal.findAll()
+        .then(sucursales => {
+            res.render('admin/agregarAuto',{
+                getSucursales: sucursales,
+                session: req.session
+            })
+        })
+        /* res.render('admin/agregarAuto',{
             getSucursales,
             session: req.session
-        })
+        }) */
     },
     agregarAuto: (req, res) => {
         let errors = validationResult(req);
         if (errors.isEmpty()){
-            let lastId = 1;
-        getAutos.forEach(auto => {
+         /* let lastId = 1;
+            getAutos.forEach(auto => {
             if(auto.id > lastId){
                 lastId = auto.id
             }
-        })
+        }) */
 
         let { marca, modelo, anio, color, sucursal } = req.body
-
-        let nuevoAuto = {
+        res.send(req.body)
+        db.Auto.create({
+            marca,
+            modelo,
+            anio,
+            color,
+            sucursalId:sucursal,
+            imagen: req.file ? req.file.filename : "default-image.png"
+        })
+        .then((result) => {
+            res.send(result)
+        })
+        .catch(err => console.log(err))
+        /* let nuevoAuto = {
             id: lastId + 1,
             marca: marca.trim(),
             modelo: modelo.trim(),
@@ -144,34 +226,68 @@ module.exports = {
             sucursal: +sucursal,
             imagen: req.file ? req.file.filename : "default-image.png" //Si existe req.file (si subieron un archivo), guarda el nombre de ese archivo en el JSON, y si no guarda el "default-image.png".
         }
-        
         getAutos.push(nuevoAuto)
         writeJsonAutos(getAutos);
         res.redirect(`/admin/autos#${nuevoAuto.id}`)
-        //res.redirect('/admin/autos')
+        */
         }else{
+            db.Sucursal.findAll()
+            .then(sucursales => {
             res.render('admin/agregarAuto',{
+                getSucursales: sucursales,
+                errors: errors.mapped(),
+                old: req.body,
+                session: req.session
+            })
+        })
+            /* res.render('admin/agregarAuto',{
                 getSucursales,
                 session: req.session,
                 errors: errors.mapped(),
                 old: req.body
-            })
+            }) */
         }
         
     },
     editFormAuto: (req, res) => {
-        let auto = getAutos.find(auto => auto.id === +req.params.id)
+        let sucursales = db.Sucursal.findAll()
+        let autoParams = db.Auto.findByPk(req.params.id,{
+            include:[{association: 'sucursal'}]
+        })
+        Promise.all([sucursales, autoParams])
+        .then(([getSucursales, auto]) => {
+            res.render('admin/editAuto', {
+                auto,
+                session: req.session,
+                getSucursales
+            })
+        })
+        /* let auto = getAutos.find(auto => auto.id === +req.params.id)
         res.render('admin/editAuto', {
             auto,
             session: req.session,
             getSucursales
-        })
+        }) */
     },
     editAuto: (req, res) => {
         let errors = validationResult(req);
         if(errors.isEmpty()){
+            let auto = db.Auto.findByPk(req.params.id)
             let { marca, modelo, anio, color, sucursal } = req.body
-        getAutos.forEach(auto => {
+            db.Auto.update({
+                marca,
+                modelo,
+                anio,
+                color,
+                sucursalId: sucursal,
+                imagen: req.file ? req.file.filename : auto.imagen
+            },
+            { where: { id : req.params.id}})
+            .then(() => {
+                res.redirect('/admin/autos')
+            })
+            .catch(error => console.log(error))
+            /* getAutos.forEach(auto => {
             if(auto.id === +req.params.id){
                 auto.id = auto.id,
                 auto.marca = marca,
@@ -185,27 +301,49 @@ module.exports = {
 
         writeJsonAutos(getAutos);
 
-        res.redirect('/admin/autos')
+        res.redirect('/admin/autos') */
         }else{
-            let auto = getAutos.find(auto => auto.id === +req.params.id)
+            let sucursales = db.Sucursal.findAll()
+            let autoParams = db.Auto.findByPk(req.params.id,{
+            include:[{association: 'sucursal'}]
+            })
+            Promise.all([sucursales, autoParams])
+            .then(([getSucursales, auto]) => {
+                res.render('admin/editAuto', {
+                auto,
+                session: req.session,
+                getSucursales,
+                errors: errors.mapped(),
+                old: req.body
+                })
+            })
+            /* let auto = getAutos.find(auto => auto.id === +req.params.id)
             res.render('admin/editAuto', {
                 auto,
                 getSucursales,
                 session: req.session,
                 errors: errors.mapped(),
                 old: req.body
-            })
+            }) */
         }
         
     },
     borrarAuto: (req, res) => {
-        getAutos.forEach(auto => {
+        db.Auto.destroy({
+            where: {
+              id: req.params.id
+            }
+          })
+          .then(() => {
+            return res.redirect('/admin/autos')
+          })
+        /* getAutos.forEach(auto => {
             if(auto.id === +req.params.id){
                 let autoAEliminar = getAutos.indexOf(auto);
                 getAutos.splice(autoAEliminar, 1)
             }
         })
         writeJsonAutos(getAutos);
-        res.redirect('/admin/autos');
+        res.redirect('/admin/autos'); */
     },
 }

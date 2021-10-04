@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "nodemonConfig": {
-    "ignore":"src/data/*.json"
+    "ignore": "src/data/*.json"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
@@ -23,6 +23,8 @@
     "express-validator": "^6.12.1",
     "method-override": "^3.0.0",
     "morgan": "^1.10.0",
-    "multer": "^1.4.3"
+    "multer": "^1.4.3",
+    "mysql2": "^2.3.0",
+    "sequelize": "^6.6.5"
   }
 }

@@ -22,9 +22,12 @@
                     <input type="tel" class="form-control" id="inputTel" name="telefono" value="<%= (locals.old && old.telefono) ? old.telefono : '' %>">
                     <small class="text-danger"><%= (locals.errors  && errors.telefono) ? errors.telefono.msg : "" %></small>
                 </div>
+                <!-- Image preview -->
+                <div id="imagePreview"></div>
+                
                 <div class="col-12">
                     <label for="inputFile" class="form-label">Imagen</label>
-                    <input type="file" class="form-control" name="image" id="inputFile">
+                    <input type="file" class="form-control" id="inputFile" name="image" onchange="return fileValidation()"/>
                 </div>
                 <div class="col-12">
                     <button type="submit" class="btn btn-primary">AGREGAR</button>
@@ -32,7 +35,7 @@
             </form>
         </div>
     </main>
-   
+    <script src="/js/imagePreview.js"></script>
     <%- include('../partials/scripts.ejs')  %> 
 </body>
 </html>

@@ -1,14 +1,32 @@
-let { getAutos, getSucursales } = require('../data/dataBase')
+//let { getAutos, getSucursales } = require('../data/dataBase')
+let db = require('../database/models')
 
 let autosController = {
     listar: (req, res) => {
-        res.render('autos', {
+        db.Auto.findAll()
+        .then(autos => {
+            res.render('autos', {
+                autos,
+                session:req.session
+            })
+        })
+        /* res.render('autos', {
             autos: getAutos,
             session:req.session
-        })
+        }) */
     },   
     auto : (req, res) => {
-        let auto = getAutos.find(auto => {
+        db.Auto.findByPk(req.params.id,{
+            include:[{association: 'sucursal'}]
+        })
+        .then(auto => {
+            res.render('autoDetail', {
+                auto,
+                sucursal: auto.sucursal,
+                session:req.session
+            })
+        })
+        /* let auto = getAutos.find(auto => {
             return auto.id === +req.params.id 
         })
         let sucursal = getSucursales.find(sucursal => sucursal.id == auto.sucursal)
@@ -16,7 +34,7 @@ let autosController = {
             auto,
             sucursal,
             session:req.session
-        })   
+        })  */  
     }
 }
 

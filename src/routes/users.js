@@ -15,10 +15,10 @@ let loginValidator = require('../validations/loginValidator')
 
 
 router.get('/login',  login);
-router.post('/login', loginValidator, processLogin)
+router.post('/login', /* loginValidator,  */processLogin)
 router.get('/logout', logout)
 router.get('/register', register)
-router.post('/register', registerValidator, processRegister)
+router.post('/register', /* registerValidator, */ processRegister)
 router.get('/profile', sessionUserCheck, profile)
 router.put('/editProfile/:id', upAvatar.single('avatar'),  editProfile)
 

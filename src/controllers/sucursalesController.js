@@ -1,28 +1,44 @@
 let { getSucursales, getAutos } = require('../data/dataBase')
+let db = require('../database/models')
 
 module.exports = {
     sucursales: (req, res) => {
-        res.render('sucursales',{
+        db.Sucursal.findAll()
+        .then(sucursales => {
+            //res.send(sucursales)
+            res.render('sucursales',{
+                getSucursales: sucursales,
+                session: req.session
+            })
+        })
+        /* res.render('sucursales',{
             getSucursales,
             session: req.session
-        })
+        }) */
     },
     sucursal : (req, res) => {
-        let id_sucursal = req.params.IDsucursal.trim(); // Capturo el parametro de la ruta
-        //guardo en una variable la sucursal que coincida con el parametro
+        db.Sucursal.findByPk(+req.params.IDsucursal,{
+            include:[{association: "auto"}]
+        })
+        .then(sucursal => {
+            res.render('sucursal', {
+                sucursal,
+                autos: sucursal.auto,
+                session: req.session
+            })
+        })
+        /* let id_sucursal = req.params.IDsucursal.trim();
         let sucursal = getSucursales.find(element => {
             return element.id === +id_sucursal
         })
-        //guardo en una variable os autos que sean de esa sucursal
         let autos = getAutos.filter(auto => {
             return auto.sucursal === +id_sucursal
         })
-        //renderiso la vista con los datos obtenidos
         res.render('sucursal', {
             sucursal,
             autos,
             session: req.session
-        })
+        }) */
         
     }
 }
