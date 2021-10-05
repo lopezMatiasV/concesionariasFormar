@@ -1,5 +1,6 @@
 const { check, body } = require('express-validator');
 const {getUsers} = require('../data/dataBase')
+const db = require('../database/models')
 
 module.exports = [
     check('nombre')
@@ -15,17 +16,17 @@ module.exports = [
         .notEmpty().withMessage('Tienes que completar con tu email'),
     
     body('email')
-        .custom(function(value){
-        console.log(value)
-
-        let usuario = getUsers.filter(user=>{ //filtro la base de datos y asigno el resultado a una varaible
-            return user.email == value //aplico la condición si coincide el mail que el usuario ingresó en el imput con que está registrado
-        })
-        if(usuario == false){ 
-            return true 
-        }else{
-            return false 
-        }
+        .custom( value => {
+            return db.User.findOne({
+                where:{
+                    email : value
+                }
+                })
+                .then(user => {
+                    if(user){
+                        return Promise.reject('Este mail ya está registrado')
+                    }
+                })
      
     })
     .withMessage('Este email ya está registrado'),

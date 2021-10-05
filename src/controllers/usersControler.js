@@ -78,7 +78,8 @@ module.exports = {
                 apellido,
                 email,
                 pass:bcrypt.hashSync(pass, 10),
-                rol:'user'
+                avatar: "default-image.png",
+                rol:'user',
             })
             .then( result => {
                 console.log(result)
@@ -158,16 +159,16 @@ module.exports = {
         res.redirect('/users/profile') */
 
     },
-    /* eliminar: (req,res)=>{
+    eliminar: (req,res) => {
         req.session.destroy();
-        if (req.cookies.userPQNTA){
-          res.cookie('userPQNTA','',{maxAge:-1});
+        if (req.cookies.concesionarias){
+          res.cookie('concesionarias','',{maxAge:-1});
         }
-        db.Users.destroy({
+        db.User.destroy({
           where:{
-            id:req.params.id
+            id : req.params.id
           }
         })
         return res.redirect('/') 
-    }, */
+    },
 }
