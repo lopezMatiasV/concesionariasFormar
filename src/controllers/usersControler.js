@@ -48,6 +48,7 @@ module.exports = {
             }
             res.redirect('/') */
         }else{
+            //res.send(errors)
             res.render('users/login',{
                 errors: errors.mapped(),
                 old : req.body,
@@ -131,6 +132,7 @@ module.exports = {
     },
     editProfile: (req, res) => {
         let { nombre, direccion, telefono } = req.body
+        let  user = db.User.findByPk(req.session.user.id)
         db.User.update({
             nombre: nombre,
             direccion: direccion,
