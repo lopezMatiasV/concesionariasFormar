@@ -2,7 +2,7 @@
 const { validationResult } = require('express-validator');
 let { getSucursales, getAutos, writeJson, writeJsonAutos} = require('../data/dataBase');
 let db = require('../database/models')
-
+ 
 //creamos el controlador
 module.exports = {
     index : (req, res) => {
