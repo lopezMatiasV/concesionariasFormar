@@ -6,13 +6,13 @@ let session = require('express-session')
 let cookieParser = require('cookie-parser')
 let cookieCheck = require('./middlewares/cookieCheck')
 
-
 /* Enrutadores */
 let autosRouter = require('./routes/autos');
 let homeRouter = require('./routes/home');
 let sucursalesRouter = require('./routes/sucursales');
 let adminRouter = require('./routes/admin');
 let usersRouter = require('./routes/users')
+let apisRouter = require('./routes/apis')
 
 /* Vistas */
 app.set('views', path.join(__dirname, 'views'));
@@ -34,6 +34,7 @@ app.use('/sucursales', sucursalesRouter);
 app.use('/autos', autosRouter);
 app.use('/admin', adminRouter);
 app.use('/users', usersRouter)
+app.use('/apis', apisRouter)
 
 /* Vista not found */
 app.use((req, res, next) => {

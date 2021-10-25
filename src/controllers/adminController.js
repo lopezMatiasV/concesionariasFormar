@@ -44,8 +44,8 @@ module.exports = {
                 telefono,
                 imagen: req.file ? req.file.filename : "default-image.png"
             })
-            .then(() => {
-                res.redirect('/admin/sucursales')
+            .then((sucursal) => {
+                res.redirect(`/admin/sucursales#${sucursal.id}`)
             })
             /* let lastId = 1;
         
@@ -149,15 +149,57 @@ module.exports = {
         }
         
     },
+    productDestroy: (req, res) => {
+        db.ProductImages.findAll({
+          where: {
+            productId: req.params.id,
+          },
+        }).then((result) => {
+          result.forEach((image) => {
+            fs.existsSync("./public/images/productos/", image.image[0])
+              ? fs.unlinkSync("./public/images/productos/" + image.image[0])
+              : console.log("-- No se encontró");
+          });
+          db.ProductImages.destroy({
+            where: {
+              productId: req.params.id,
+            },
+          }).then((result) => {
+            db.Products.destroy({
+              where: {
+                id: req.params.id,
+              },
+            }).then(res.redirect("/admin/products"));
+          });
+        });
+      },
     borrarSucursal: (req, res) => {
-        db.Sucursal.destroy({
+        db.Auto.findAll({ where : { sucursalId : req.params.id }})
+        .then(autos => {
+            db.Auto.destroy({
+                where: {
+                    sucursalId: req.params.id,
+                },
+            })
+            .then(() => {
+                db.Sucursal.destroy({
+                    where:{
+                        id : req.params.id
+                    }
+                })
+                .then(() => {
+                    res.redirect('/admin/sucursales');
+                })
+            })
+        })
+        /* db.Sucursal.destroy({
             where:{
                 id : req.params.id
             }
         })
         .then(() => {
             res.redirect('/admin/sucursales');
-        })
+        }) */
         /* getSucursales.forEach(sucursal => {
             if(sucursal.id === +req.params.id){
                 let sucursalAEliminar = getSucursales.indexOf(sucursal);
@@ -204,7 +246,6 @@ module.exports = {
         }) */
 
         let { marca, modelo, anio, color, sucursal } = req.body
-        res.send(req.body)
         db.Auto.create({
             marca,
             modelo,
@@ -213,8 +254,8 @@ module.exports = {
             sucursalId:sucursal,
             imagen: req.file ? req.file.filename : "default-image.png"
         })
-        .then((result) => {
-            res.send(result)
+        .then((auto) => {
+            res.redirect(`/admin/autos#${auto.id}`)
         })
         .catch(err => console.log(err))
         /* let nuevoAuto = {

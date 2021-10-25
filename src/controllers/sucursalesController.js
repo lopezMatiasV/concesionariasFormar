@@ -18,12 +18,12 @@ module.exports = {
     },
     sucursal : (req, res) => {
         db.Sucursal.findByPk(+req.params.IDsucursal,{
-            include:[{association: "auto"}]
+            include:[{association: "autos"}]
         })
         .then(sucursal => {
             res.render('sucursal', {
                 sucursal,
-                autos: sucursal.auto,
+                autos: sucursal.autos,
                 session: req.session
             })
         })

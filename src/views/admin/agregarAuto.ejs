@@ -1,40 +1,43 @@
 <!DOCTYPE html>
 <html lang="es">
     <%- include('../partials/head.ejs')  %> 
+    <script src="/js/autosValidator.js" defer></script>
 <body>
-    <%- include('../partials/headerAdmin.ejs')  %> 
+    <%- include('../partials/headerAdmin.ejs')  %>
+    <script src="/js/imagePreview.js"></script>
     <main class="container">
         <h3 class="text-center">Agregar Auto</h3>
         <div class="container col-md-4">
-            <form class="row g-3" action="/admin/agregarAuto" method="POST" enctype="multipart/form-data">
+            <form class="row g-3" id="cargaAuto" action="/admin/agregarAuto" method="POST" enctype="multipart/form-data">
                 <div class="col-12">
                     <label for="marca" class="form-label">Marca</label>
                     <input type="text" class="form-control" id="marca" name="marca" value="<%= (locals.old && old.marca) ? old.marca : '' %>">
-                    <small class="text-danger"><%= (locals.errors  && errors.marca) ? errors.marca.msg : "" %></small>
+                    <small class="text-danger" id="errorMarca"><%= (locals.errors  && errors.marca) ? errors.marca.msg : "" %></small>
                 </div>
                 <div class="col-12">
                     <label for="modelo" class="form-label">Modelo</label>
                     <input type="text" class="form-control" id="modelo" name="modelo" value="<%= (locals.old && old.modelo) ? old.modelo : '' %>">
-                    <small class="text-danger"><%= (locals.errors  && errors.modelo) ? errors.modelo.msg : "" %></small>
+                    <small class="text-danger" id="errorModelo"><%= (locals.errors  && errors.modelo) ? errors.modelo.msg : "" %></small>
                 </div>
                 <div class="col-12">
                     <label for="anio" class="form-label">Año</label>
                     <input type="number" class="form-control" id="anio" name="anio" value="<%= (locals.old && old.anio) ? old.anio : '' %>">
-                    <small class="text-danger"><%= (locals.errors  && errors.anio) ? errors.anio.msg : "" %></small>
+                    <small class="text-danger" id="errorAnio"><%= (locals.errors  && errors.anio) ? errors.anio.msg : "" %></small>
                 </div>
                 <div class="col-12">
                     <label for="color" class="form-label">Color</label>
                     <input type="text" class="form-control" id="color" name="color" value="<%= (locals.old  && old.color) ? old.color : "" %>">
-                    <small class="text-danger"><%= (locals.errors  && errors.color) ? errors.color.msg : "" %></small>
+                    <small class="text-danger" id="errorColor"><%= (locals.errors  && errors.color) ? errors.color.msg : "" %></small>
                 </div>
                 <div class="col-12">
                     <label for="sucursal" class="form-label">Sucursal</label>
-                    <select name="sucursal" id="categoria">
+                    <select name="sucursal" id="sucursal">
+                        <option selected hidden value="">Sucursales</option>
                         <% getSucursales.forEach( sucursal => { %>
                             <option value="<%= sucursal.id %> "><%= sucursal.nombre %> </option>
                         <% }) %> 
                     </select>
-                    <small class="text-danger"><%= (locals.errors  && errors.sucursal) ? errors.sucursal.msg : "" %></small>
+                    <small class="text-danger" id="errorSucursal"><%= (locals.errors  && errors.sucursal) ? errors.sucursal.msg : "" %></small>
                 </div>
                 <!-- Image preview -->
                 <div id="imagePreview"></div>
@@ -42,6 +45,7 @@
                     <label for="inputFile" class="form-label">Imagen</label>
                     <input type="file" class="form-control" id="inputFile" name="image" onchange="return fileValidation()"/>
                 </div>
+                <small class="text-danger" id="errorImagen"></small>
                 <div class="col-12">
                     <button type="submit" class="btn btn-primary">AGREGAR</button>
                 </div>

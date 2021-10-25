@@ -30,7 +30,7 @@ module.exports = (sequelize, dataTypes) => {
 
     Sucursal.associate = models => {
         Sucursal.hasMany(models.Auto, {
-            as: "auto",
+            as: "autos",
             foreignKey: "sucursalId"
         })
     }
