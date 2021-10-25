@@ -149,47 +149,16 @@ module.exports = {
         }
         
     },
-    productDestroy: (req, res) => {
-        db.ProductImages.findAll({
-          where: {
-            productId: req.params.id,
-          },
-        }).then((result) => {
-          result.forEach((image) => {
-            fs.existsSync("./public/images/productos/", image.image[0])
-              ? fs.unlinkSync("./public/images/productos/" + image.image[0])
-              : console.log("-- No se encontró");
-          });
-          db.ProductImages.destroy({
-            where: {
-              productId: req.params.id,
-            },
-          }).then((result) => {
-            db.Products.destroy({
-              where: {
-                id: req.params.id,
-              },
-            }).then(res.redirect("/admin/products"));
-          });
-        });
-      },
     borrarSucursal: (req, res) => {
-        db.Auto.findAll({ where : { sucursalId : req.params.id }})
-        .then(autos => {
-            db.Auto.destroy({
-                where: {
-                    sucursalId: req.params.id,
-                },
+        db.Auto.destroy({ where : { sucursalId : req.params.id }})
+        .then(() => {
+            db.Sucursal.destroy({
+                where:{
+                    id : req.params.id
+                }
             })
             .then(() => {
-                db.Sucursal.destroy({
-                    where:{
-                        id : req.params.id
-                    }
-                })
-                .then(() => {
-                    res.redirect('/admin/sucursales');
-                })
+                   res.redirect('/admin/sucursales');
             })
         })
         /* db.Sucursal.destroy({
