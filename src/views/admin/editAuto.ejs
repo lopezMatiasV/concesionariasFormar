@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="es">
     <%- include('../partials/head.ejs')  %>
-    <script src="/js/autosValidator.js" defer></script>
+    <script src="/js/editAutoValidator.js" defer></script>
     <script src="/js/imagePreview.js"></script>
 <body>
     <%- include('../partials/headerAdmin.ejs')  %> 
     <main class="container">
         <h3 class="text-center">Editar Auto</h3>
         <div class="container col-md-4">
-            <form class="row g-3"  id="cargaAuto" action="/admin/editarAuto/<%= auto.id %>?_method=PUT" method="POST" enctype="multipart/form-data">
+            <form class="row g-3"  id="editAuto" action="/admin/editarAuto/<%= auto.id %>?_method=PUT" method="POST" enctype="multipart/form-data">
                 <div class="col-12">
                     <label for="marca" class="form-label">Marca</label>
                     <input type="text" class="form-control" id="marca" name="marca" value="<%= (locals.old && old.marca) ? old.marca : auto.marca %>">

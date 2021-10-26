@@ -23,7 +23,7 @@ module.exports = {
     search: (req, res) => {
         let busqueda = req.query.search.toLowerCase()
         db.Auto.findAll({
-            where: {modelo: {[Op.substring]: busqueda}
+            where: {marca: {[Op.substring]: busqueda}
               }
         })
         .then(autos => {
