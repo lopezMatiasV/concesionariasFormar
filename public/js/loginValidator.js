@@ -57,9 +57,19 @@ window.addEventListener('load', function() {
                 email.classList.add('is-invalid')
                 errores = true;
                 break;
+            case !regExEmail.test(email.value):
+                errorEmail.innerHTML = "Debes escribir un mail válido";
+                this.classList.add('is-invalid')
+                errores = true;
+                break;
             case pass.value.length == 0:
                 errorPass.innerHTML = "El campo contraseña es obligatorio";
                 pass.classList.add('is-invalid')
+                errores = true;
+                break;
+            case !regExPass.test(pass.value):
+                errorPass.innerHTML = "El campo contraseña debe tener: entre 6 y 12 caracteres, al menos 1 mayúscula, una minúscula y un número";
+                this.classList.add('is-invalid')
                 errores = true;
                 break;
             default:

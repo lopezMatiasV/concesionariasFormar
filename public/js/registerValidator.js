@@ -16,7 +16,7 @@ window.addEventListener('load',function(){
 
     nombre.addEventListener('blur', function(){
         switch (true) {
-            case this.value.length == 0 : errorNombre.innerHTML = "El campo nombre es obligatorio";
+            case email.value.length == 0 : errorNombre.innerHTML = "El campo nombre es obligatorio";
                 this.classList.add('is-invalid');
                 errores = true;
                 break;
@@ -121,25 +121,49 @@ window.addEventListener('load',function(){
             nombre.classList.add('is-invalid')
             errores = true
             break;
+        case nombre.value.length <= 2 : errorNombre.innerHTML = "El campo nombre debe tener al menos 3 letras";
+            nombre.classList.add('is-invalid')
+            errores = true;
+            break;
         case apellido.value.length == 0:
             errorApellido.innerHTML = "El campo no puede ir vacio";
             apellido.classList.add('is-invalid');
             errores = true
+            break;
+        case apellido.value.length <=2:
+            errorApellido.innerHTML = "El campo apellido debe tener al menos 3 letras";
+            apellido.classList.add('is-invalid')
+            errores = true;
             break;
         case email.value.length == 0:
             errorEmail.innerHTML = "El campo no puede ir vacio";
             email.classList.add('is-invalid');
             errores = true
             break;
+        case !regExEmail.test(email.value):
+            errorEmail.innerHTML = "Debes escribir un mail válido";
+            email.classList.add('is-invalid')
+            errores = true;
+            break;
         case pass.value.length == 0:
             errorPass.innerHTML = "El campo no puede ir vacio";
             pass.classList.add('is-invalid');
             errores = true
             break;
+        case !regExPass.test(pass.value):
+            errorPass.innerHTML = "El campo contraseña debe tener: entre 6 y 12 caracteres, al menos 1 mayúscula, una minúscula y un número";
+            pass.classList.add('is-invalid')
+            errores = true;
+            break;
         case pass2.value.length == 0:
             errorPass2.innerHTML = "El campo no puede ir vacio";
             pass2.classList.add('is-invalid');
             errores = true
+            break;
+        case pass2.value != pass.value:
+            errorPass2.innerHTML = "Las contraseñas no coinciden"
+            pass2.classList.add('is-invalid')
+            errores = true;
             break;
         default:
             if(!errores){

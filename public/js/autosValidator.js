@@ -3,7 +3,7 @@ const qs = function (element){
 }
 window.addEventListener('load',function(){
     
-    let cargaAuto = qs('#cargaAuto');
+    let cargaAuto = qs('#auto');
     let marca = qs('#marca');
     let modelo = qs('#modelo');
     let anio = qs('#anio');
@@ -74,7 +74,7 @@ window.addEventListener('load',function(){
             default:
                 this.classList.remove('is-invalid');
                 this.classList.add('is-valid');
-                errorAnio.innerHTML = ""  // lo vacio
+                errorAnio.innerHTML = ""
                 errores = false;
                 break;
         }
@@ -121,6 +121,7 @@ window.addEventListener('load',function(){
                 errorImagen.innerHTML = 'Archivo no permitido'
                 this.classList.add('is-invalid')
                 this.value = '';
+
                 break
             default:
                 this.classList.remove('is-invalid');
@@ -137,20 +138,40 @@ window.addEventListener('load',function(){
                 marca.classList.add('is-invalid');
                 errores = true
                 break;
+            case marca.value.length <= 2:
+                errorMarca.innerHTML = "El campo marca debe tener al menos 3 caracteres";
+                marca.classList.add('is-invalid')
+                errores = true;
+                break;
             case modelo.value.length == 0:
                 errorModelo.innerHTML = "El campo no puede ir vacio";
                 modelo.classList.add('is-invalid');
                 errores = true
+                break;
+            case modelo.value.length <= 2:
+                errorModelo.innerHTML = "El campo Modelo debe tener al menos 3 caracteres";
+                modelo.classList.add('is-invalid')
+                errores = true;
                 break;
             case anio.value.length == 0:
                 errorAnio.innerHTML = "El campo no puede ir vacio";
                 anio.classList.add('is-invalid');
                 errores = true
                 break;
+            case anio.value.length !== 4:
+                errorAnio.innerHTML = "Ingrese un valor de 4 dígitos";
+                anio.classList.add('is-invalid')
+                errores = true;
+                break;
             case color.value.length == 0:
                 errorColor.innerHTML = "El campo no puede ir vacio";
                 color.classList.add('is-invalid');
                 errores = true
+                break;
+            case color.value.length <= 2:
+                errorColor.innerHTML = "El campo Color debe tener al menos 3 caracteres";
+                color.classList.add('is-invalid')
+                errores = true;
                 break;
             case sucursal.value.length == 0:
                 errorSucursal.innerHTML = "Tienes que seleccionar una sucursal";

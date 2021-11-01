@@ -3,12 +3,11 @@ const qs = function (element){
 }
 window.addEventListener('load',function(){
     
-    let editAuto = qs('#editAuto');
+    let editAuto = qs('#auto');
     let marca = qs('#marca');
     let modelo = qs('#modelo');
     let anio = qs('#anio');
     let color = qs('#color');
-    let sucursal = qs('#sucursal');
     let imagen = qs('#inputFile')
     let regExExtensions = /(.jpg|.jpeg|.png|.gif)$/i;
     let errores;
@@ -28,7 +27,7 @@ window.addEventListener('load',function(){
             default:
                 this.classList.remove('is-invalid');
                 this.classList.add('is-valid');
-                errorMarca.innerHTML = ""  // lo vacio
+                errorMarca.innerHTML = ""
                 errores = false;
                 break;
         }
@@ -60,20 +59,20 @@ window.addEventListener('load',function(){
                 this.classList.add('is-invalid')
                 errores = true;
                 break;
-            case this.value.length !== 4:
-                errorAnio.innerHTML = "Ingrese un valor de 4 dígitos";
-                this.classList.add('is-invalid')
-                errores = true;
-                break;
-            case this.value > 2021:
-                errorAnio.innerHTML = "Ingrese un año válido";
-                this.classList.add('is-invalid')
-                errores = true;
-                break;
+                case this.value.length !== 4:
+                    errorAnio.innerHTML = "Ingrese un valor de 4 dígitos";
+                    this.classList.add('is-invalid')
+                    errores = true;
+                    break;
+                case this.value > 2021:
+                    errorAnio.innerHTML = "Ingrese un año válido";
+                    this.classList.add('is-invalid')
+                    errores = true;
+                    break;
             default:
                 this.classList.remove('is-invalid');
                 this.classList.add('is-valid');
-                errorAnio.innerHTML = ""  // lo vacio
+                errorAnio.innerHTML = "" 
                 errores = false;
                 break;
         }
@@ -114,48 +113,53 @@ window.addEventListener('load',function(){
                 break
         }
     })
-    /* editAuto.addEventListener('submit',function(event){
-        let errores = false
-        event.preventDefault()
-    
-        let elementosFormE = editAuto.elements
-        
-        for (let index = 0; index < elementosFormE.length-1; index++) {
-            if(elementosFormE[index].value == ""){
-                elementosFormE[index].classList.add('is-invalid');
-                msgError.innerHTML = "Los campos señalados son obligatorios para editar productos";
-                errores =true
-            }
-        }
-        if(!errores){
-            console.log("Todo Perfecto en la edición!!");
-            alert("Producto modificado correctamente")
-            editAuto.submit()
-        }
-        
-    }) */
     editAuto.addEventListener('submit',function(event){
         event.preventDefault()
         switch(true){
         case marca.value.length == 0:
             errorMarca.innerHTML = "El campo no puede ir vacio";
-            marca.clasList.add('is-invalid')
+            marca.classList.add('is-invalid');
             errores = true
+            break;
+        case marca.value.length <= 2:
+            errorMarca.innerHTML = "El campo marca debe tener al menos 3 caracteres";
+            marca.classList.add('is-invalid')
+            errores = true;
             break;
         case modelo.value.length == 0:
             errorModelo.innerHTML = "El campo no puede ir vacio";
             modelo.classList.add('is-invalid');
             errores = true
             break;
+        case modelo.value.length <= 2:
+            errorModelo.innerHTML = "El campo Modelo debe tener al menos 3 caracteres";
+            modelo.classList.add('is-invalid')
+            errores = true;
+            break;
         case anio.value.length == 0:
             errorAnio.innerHTML = "El campo no puede ir vacio";
             anio.classList.add('is-invalid');
             errores = true
             break;
+        case anio.value.length !== 4:
+            errorAnio.innerHTML = "Ingrese un valor de 4 dígitos";
+            anio.classList.add('is-invalid')
+            errores = true;
+            break;
+        case anio.value > 2021:
+            errorAnio.innerHTML = "Ingrese un año válido";
+            anio.classList.add('is-invalid')
+            errores = true;
+            break;
         case color.value.length == 0:
             errorColor.innerHTML = "El campo no puede ir vacio";
             color.classList.add('is-invalid');
             errores = true
+            break;
+        case color.value.length <= 2:
+            errorColor.innerHTML = "El campo Color debe tener al menos 3 caracteres";
+            color.classList.add('is-invalid')
+            errores = true;
             break;
         default:
             if(!errores){
