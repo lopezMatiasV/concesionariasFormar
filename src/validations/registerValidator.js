@@ -37,6 +37,10 @@ module.exports = [
         max:12
     })
     .withMessage('La contraseña debe tener entre 6 y 12 caracteres'),
+    
+    check('pass')
+    .isAlphanumeric(['es-ES'])
+    .withMessage('La contraseña debe tener al menos una letra y un número'),
 
     body('pass2')
     .custom(function(value,{req}){
